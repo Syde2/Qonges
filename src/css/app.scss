@@ -1,0 +1,21 @@
+// app global css in SCSS form
+.vc-title, .vc-prev, .vc-next {
+  background-color : white;
+}
+
+@font-face {
+  font-family: azeret;
+  src: url('assets/fonts/AzeretMono-VariableFont_wght.ttf');
+}
+
+// declare a class which applies it
+.my-font {
+  font-family: 'azeret';
+}
+
+.bg{
+  opacity: 0.3;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+}
