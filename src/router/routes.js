@@ -4,12 +4,9 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', redirect:'/quotidien' ,  component: () => import('pages/PageIndex.vue') },
-      { path: '/index',  component: () => import('pages/PageIndex.vue') },
-      { path: '/quotidien',  component: () => import('pages/PageCalendrierQuotidien.vue') },
+      { path: '/index',redirect: '/' ,  component: () => import('pages/PageIndex.vue') },
       { path: '/mensuel',  component: () => import('pages/PageCalendrierMensuel.vue') },
-      { path: '/statistiques',  component: () => import('pages/PageStatistiques.vue') },
-      { path: '/parametres',  component: () => import('pages/PageParametres.vue') },
+
     ]
   },
 

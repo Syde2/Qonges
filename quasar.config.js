@@ -7,7 +7,6 @@ module.exports = configure(function ( ctx ) {
     boot: [
       'axios',
       'vcalendar',
-      'apexcharts'
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
@@ -17,7 +16,6 @@ module.exports = configure(function ( ctx ) {
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
-
       'roboto-font', // optional, you are not bound to it
       'material-icons', // optional, you are not bound to it
       'material-symbols-outlined'

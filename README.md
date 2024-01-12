@@ -1,5 +1,4 @@
-# Qalendar (qalendar)
+# Qonges
 
-Calendar made with Quasar
+Alt version of Qalendar, a calendar made with Quasar
 
-![screenshot](./public/screenshot.jpeg)

@@ -2,8 +2,7 @@
 import {ref} from 'vue'
 import { storeToRefs } from 'pinia';
 import { useCalendarStore } from 'src/stores/calendarStore';
-import CalendrierMensuel from 'src/components/mensuel/CalendrierMensuel.vue';
-import InterfaceMensuel from 'src/components/mensuel/InterfaceMensuel.vue'
+import CalendrierMensuel from 'src/components/CalendrierMensuel.vue';
 
 const {rangeTotalJours} = storeToRefs(useCalendarStore())
 const step = ref(1)
@@ -15,7 +14,6 @@ const step = ref(1)
     <div class=" gt-md illustration"></div>
     <div class="container">
       <CalendrierMensuel />
-      <InterfaceMensuel />
     </div>
   </q-page>
 </template>

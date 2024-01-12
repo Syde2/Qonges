@@ -3,7 +3,6 @@ import {ref, computed} from 'vue'
 import { storeToRefs } from 'pinia';
 import {useCalendarStore} from 'stores/calendarStore.js'
 import DateInput from 'components/mensuel/DateInput.vue'
-import SelectActivite from '../quotidien/SelectActivite.vue';
 import InputHeures from 'components/mensuel/InputHeures.vue'
 
 const {rangeFormattee} = storeToRefs(useCalendarStore())
