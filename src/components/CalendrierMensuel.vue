@@ -32,11 +32,6 @@ function afficherJoursFeries(){
 
 }
 
-function formatDateConges(rawDate){
-  let formattedDate =  date.formatDate(rawDate, 'DD/MM/YYYY')
-  return formattedDate
-}
-
 function afficherVacancesScolaires(){
 
   function ajusterDateDebut(dateDebut){
@@ -74,15 +69,15 @@ function afficherVacancesScolaires(){
       popover : {
         label:  `${periode.description}, du ${ date.formatDate(ajusterDateDebut(periode.start_date), "DD/MM")}  au ${ date.formatDate(ajusterDateFin( periode.end_date), "DD/MM/YYYY")}, `
       },
-      bar:{
-        color:'green'
-      }
+      // bar:{
+      //   color:'green'
+      // },
 
-      // highlight : {
-      //   color: 'green',
-      //   fillMode: 'solid',
-      //   contentClass: 'italic',
-      // }
+      highlight : {
+        color: 'green',
+        fillMode: 'solid',
+        contentClass: 'italic',
+      }
 
 
 
@@ -116,6 +111,13 @@ const masks = ref({
   :attributes= attributes
   :masks="masks"
   >
+  <template #day-content="{day , attributes}" >
+    <div class="q-pa-md q-ma-sm " style="border: 1px solid black; border-radius: 10px;" >
+      {{ day.day }}
+
+    </div>
+
+  </template>
 
   </VDatePicker>
 </template>
