@@ -38,14 +38,41 @@ function formatDateConges(rawDate){
 }
 
 function afficherVacancesScolaires(){
+
+  function ajusterDateDebut(dateDebut){
+    // Faire débuter le 1er jour des vacances au lundi
+    // 0 a 6 , Dimanche au Samedi
+    let numeroJour =  date.getDayOfWeek(dateDebut)
+    if(numeroJour === 6  ){
+      dateDebut = date.addToDate(dateDebut, {days:2})
+      console.log('AJOUT 2 JOURS',dateDebut)
+    }
+    else if( numeroJour === 7 ){
+      dateDebut = date.addToDate(dateDebut, {days:1})
+      console.log('AJOUT 1 JOUR',dateDebut)
+    }
+    return dateDebut
+  }
+  function ajusterDateFin(dateFin){
+    // Terminer les vacances le dimanche soir (pb time)
+    let numeroJour =  date.getDayOfWeek(dateFin)
+    if(numeroJour === 1 ){
+      console.log("je passe ici")
+      dateFin = date.subtractFromDate(dateFin, {hours :1})
+    }
+
+    return  dateFin
+  }
+
+
   vacancesScolaires.forEach( periode =>{
     attributes.value.push({
       dates: {
-        start:  periode.start_date,
-        end:   periode.end_date,
+        start:  ajusterDateDebut(periode.start_date),
+        end:  ajusterDateFin( periode.end_date)
       },
       popover : {
-        label: periode.description+' Du '+formatDateConges( periode.start_date)+ ' Au ' + formatDateConges(periode.end_date)
+        label:  `${periode.description}, du ${ date.formatDate(ajusterDateDebut(periode.start_date), "DD/MM")}  au ${ date.formatDate(ajusterDateFin( periode.end_date), "DD/MM/YYYY")}, `
       },
       bar:{
         color:'green'
