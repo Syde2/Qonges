@@ -4,7 +4,7 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '/index',redirect: '/' ,  component: () => import('pages/PageIndex.vue') },
+      { path: '/',  component: () => import('pages/PageIndex.vue') },
       { path: '/mensuel',  component: () => import('pages/PageCalendrierMensuel.vue') },
 
     ]

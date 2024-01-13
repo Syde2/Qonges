@@ -9,7 +9,7 @@ const formatFrancais =
   monthsShort: ['Jan', 'Fev',"Mar", 'Avr', 'Mai', 'Juin', 'Juil', 'Aout', 'Sept', 'Oct', 'Nov', 'Déc.' ]
 }
 
-export const useCalendarStore = defineStore('calendar', {
+export const useDateStore = defineStore('date', {
   state: () => ({
     dateSelectionnee: new Date(),
     today : new Date(),

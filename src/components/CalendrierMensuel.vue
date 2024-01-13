@@ -1,73 +1,95 @@
 <script setup>
-import { ref } from 'vue';
-import { api } from 'src/boot/axios';
+import {ref} from 'vue'
 import { storeToRefs } from 'pinia';
-import { useCalendarStore } from 'stores/calendarStore.js'
+import { useDatePickerStore } from 'stores/datePickerStore.js'
+import {getJoursFeries, getVacancesScolaires} from 'src/composables/ApiCalls.js'
+import {date} from 'quasar'
 
-const { range, today, annee } = storeToRefs(useCalendarStore())
+const datePickerStore = useDatePickerStore()
+const { range, disabledDates, attributes } = storeToRefs(datePickerStore)
 
-const disabledDates = ref([
-  {
-    repeat: {
-      weekdays: [7, 1],
-    },
-  },
-])
+const jourFeries = await getJoursFeries()
+const vacancesScolaires = await getVacancesScolaires()
 
-const attributes = ref([])
+function afficherJoursFeries(){
+  const datesFeriees = Object.keys(jourFeries)
 
-async function getJoursFeries() {
-  // const url = `https://calendrier.api.gouv.fr/jours-feries/metropole/${annee.value}.json`
-  const url = `https://calendrier.api.gouv.fr/jours-feries/metropole.json`
-  const data = await fetch(url)
-  const response = await data.json()
-  const jourFeries = Object.keys(response)
-  jourFeries.forEach(jour => {
-
-   attributes.value.push({
-    dates : jour,
-    highlight: {
-        color: 'indigo',
-        fillMode: 'light',
-        contentClass: 'italic',
+  datesFeriees.forEach(date => {
+    attributes.value.push(
+    {
+      dates: date,
+      popover : {
+        label: jourFeries[date]
       },
-    popover: {
-      label: 'Jour férié',
-    },
-
-    });
+      highlight : {
+        color: 'purple',
+        fillMode: 'solid',
+        contentClass: 'italic',
+      }
     }
-      )
+    )
+  });
+
 }
 
-async function getQuotidien() {
-  const data = api.get('/quotidiens.json')
-  const response = await data
-  response.data.forEach(value => {
+function formatDateConges(rawDate){
+  let formattedDate =  date.formatDate(rawDate, 'DD/MM/YYYY')
+  return formattedDate
+}
+
+function afficherVacancesScolaires(){
+  vacancesScolaires.forEach( periode =>{
     attributes.value.push({
-      dates: value.date,
-      dot: 'teal',
-      popover: {
-        label: value.detailQuotidien[0].Activite.nomActivite
+      dates: {
+        start:  periode.start_date,
+        end:   periode.end_date,
       },
+      popover : {
+        label: periode.description+' Du '+formatDateConges( periode.start_date)+ ' Au ' + formatDateConges(periode.end_date)
+      },
+      bar:{
+        color:'green'
+      }
+
+      // highlight : {
+      //   color: 'green',
+      //   fillMode: 'solid',
+      //   contentClass: 'italic',
+      // }
 
 
 
     })
-  })
+
+  } )
+
 }
 
-getJoursFeries()
-getQuotidien()
+
+afficherJoursFeries()
+afficherVacancesScolaires()
+
+const masks = ref({
+  modelValue: 'DD/MM/YYYY',
+});
+
+
 
 </script>
 
 <template>
-  <VDatePicker v-model.range="range" mode="date" borderless expanded transparent  is-required
-    :disabled-dates="disabledDates" :attributes='attributes' @drag="(e)=>console.log('drag',e)">
-    <template #header-title="{ title }">
-      <p class="text-h4 my-font text-primary"> {{ title }} </p>
-    </template>
+  <VDatePicker
+  v-model.range= range
+  mode="date"
+  borderless
+  expanded
+  transparent
+  is-required
+  :disabled-dates= disabledDates
+  :attributes= attributes
+  :masks="masks"
+  >
+
   </VDatePicker>
 </template>
 
